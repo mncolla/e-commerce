@@ -9,6 +9,9 @@ export class User extends Model {
 	@Column
 	email: string;
 
+	@Column
+	password: string;
+
 	@HasMany(() => Product, { as: 'products' })
 	products: Product[];
 }
