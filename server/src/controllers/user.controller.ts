@@ -1,10 +1,16 @@
 import { Request, Response } from 'express';
-import { User } from '../models/user.model';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 const getUser = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	try {
-		const user = await User.findByPk(id);
+		const user = await prisma.user.findUnique({
+			where: {
+				id: parseInt(id),
+			},
+		});
 		res.status(200).json({ data: user });
 	} catch (error) {
 		res.status(500).json({ data: error });
@@ -13,7 +19,7 @@ const getUser = async (req: Request, res: Response) => {
 
 const getUsers = async (req: Request, res: Response) => {
 	try {
-		const users = User.findAll();
+		const users = prisma.user.findMany();
 		res.status(200).json({ data: users });
 	} catch (error) {
 		res.status(500).json({ data: error });
@@ -21,9 +27,11 @@ const getUsers = async (req: Request, res: Response) => {
 };
 
 const createUser = async (req: Request, res: Response) => {
-	const { username, email } = req.body;
+	const { username, email, password } = req.body;
 	try {
-		const user = await User.create({ username, email });
+		const user = await prisma.user.create({
+			data: { username, email, password },
+		});
 		res.status(200).json({ data: user });
 	} catch (error) {
 		res.status(500).json({ data: error });
@@ -33,9 +41,9 @@ const createUser = async (req: Request, res: Response) => {
 const removeUser = async (req: Request, res: Response) => {
 	const { id } = req.params;
 	try {
-		const user = await User.destroy({
+		const user = await prisma.user.delete({
 			where: {
-				id,
+				id: parseInt(id),
 			},
 		});
 		res.status(200).json({ data: user });

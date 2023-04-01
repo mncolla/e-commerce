@@ -1,7 +1,6 @@
 // Import the express in typescript file
 import express from 'express';
 import { apiRouter } from './routes';
-import Database from './models';
 
 // Initialize the express engine
 const app: express.Application = express();
@@ -14,9 +13,6 @@ app.use(express.json());
 
 // Routes
 app.use('/api/v1', apiRouter);
-
-// Database init
-Database.sync();
 
 // Server setup
 app.listen(port, () => {
