@@ -1,13 +1,14 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
+import { decodeToken, generateToken } from '../services/jwt.service';
 
 const prisma = new PrismaClient();
 
 const logIn = async (req: Request, res: Response) => {
 	try {
 		const { email, password } = req.body;
-		const user = await prisma.user.findUnique({
+		const user: any = await prisma.user.findUnique({
 			where: {
 				email,
 			},
@@ -15,14 +16,22 @@ const logIn = async (req: Request, res: Response) => {
 
 		const match = await bcrypt.compare(password, user!.password);
 
-		if (match) {
-			res.status(200).json({ data: user });
+		if (!match) {
+			res.status(404).json({
+				status: 'error',
+				message: 'User does not exists',
+			});
 			return;
 		}
 
-		res.status(404).json({ data: 'User does not exists' });
+		const token = generateToken(user.id);
+
+		res.status(200).json({
+			status: 'success',
+			data: { token },
+		});
 	} catch (error) {
-		res.status(500).json({ data: error });
+		res.status(500).json({ status: 'error', message: error });
 	}
 };
 
@@ -37,22 +46,51 @@ const signUp = async (req: Request, res: Response) => {
 		});
 
 		if (exists) {
-			res.status(500).json({ data: 'Email already been registered' });
+			res.status(500).json({
+				status: 'error',
+				message: 'Email already been registered',
+			});
 			return;
 		}
 
 		const hashed = await bcrypt.hash(password, 10);
-		const user = await prisma.user.create({
+		const user: any = await prisma.user.create({
 			data: { username, email, password: hashed },
 		});
 
-		res.status(200).json({ data: user });
+		const token = generateToken(user.id);
+
+		res.status(200).json({
+			status: 'success',
+			data: { user, token },
+		});
 	} catch (error) {
-		res.status(500).json({ data: error });
+		res.status(500).json({ status: 'error', message: error });
+	}
+};
+
+const check = async (req: Request, res: Response) => {
+	try {
+		const token = req.headers.authorization;
+
+		const decoded: any = decodeToken(token!);
+
+		const user = await prisma.user.findUnique({
+			where: {
+				id: decoded.id,
+			},
+		});
+
+		console.log(decoded);
+
+		res.status(200).json({ status: 'success', data: { user } });
+	} catch (error) {
+		res.status(500).json({ status: 'error', message: error });
 	}
 };
 
 export default {
 	logIn,
 	signUp,
+	check,
 };
