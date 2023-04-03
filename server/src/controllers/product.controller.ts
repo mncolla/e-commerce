@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { decodeToken } from '../services/jwt.service';
 
 const prisma = new PrismaClient();
 
@@ -27,7 +28,9 @@ const getProducts = async (req: Request, res: Response) => {
 };
 
 const createProduct = async (req: Request, res: Response) => {
-	const { name, description, price, userId } = req.body;
+	const { authorization } = req.headers;
+	const { id: userId }: any = decodeToken(authorization!);
+	const { name, description, price } = req.body;
 	try {
 		const product = await prisma.product.create({
 			data: { name, description, price, userId },
