@@ -13,9 +13,9 @@ const swaggerOptions = {
 	definition: {
 		openapi: '3.0.0',
 		info: {
-			title: 'Mi Aplicación API',
-			version: '1.0.0',
-			description: 'Documentación de API para Mi Aplicación',
+			title: 'Ecommerce app',
+			version: '0.0.51',
+			description: 'Documentación de API',
 		},
 		servers: [
 			{
