@@ -83,7 +83,7 @@ const check = async (req: Request, res: Response) => {
 
 		console.log(decoded);
 
-		res.status(200).json({ status: 'success', data: { user } });
+		res.status(200).json({ status: 'success', data: user });
 	} catch (error) {
 		res.status(500).json({ status: 'error', message: error });
 	}

@@ -11,18 +11,18 @@ const getUser = async (req: Request, res: Response) => {
 				id: parseInt(id),
 			},
 		});
-		res.status(200).json({ data: user });
+		res.status(200).json({ status: 'success', data: user });
 	} catch (error) {
-		res.status(500).json({ data: error });
+		res.status(500).json({ status: 'error', message: error });
 	}
 };
 
 const getUsers = async (req: Request, res: Response) => {
 	try {
 		const users = prisma.user.findMany();
-		res.status(200).json({ data: users });
+		res.status(200).json({ status: 'success', data: users });
 	} catch (error) {
-		res.status(500).json({ data: error });
+		res.status(500).json({ status: 'error', message: error });
 	}
 };
 
@@ -32,9 +32,9 @@ const createUser = async (req: Request, res: Response) => {
 		const user = await prisma.user.create({
 			data: { username, email, password },
 		});
-		res.status(200).json({ data: user });
+		res.status(200).json({ status: 'success', data: user });
 	} catch (error) {
-		res.status(500).json({ data: error });
+		res.status(500).json({ status: 'error', message: error });
 	}
 };
 
@@ -46,9 +46,25 @@ const removeUser = async (req: Request, res: Response) => {
 				id: parseInt(id),
 			},
 		});
-		res.status(200).json({ data: user });
+		res.status(200).json({ status: 'sucess', data: user });
 	} catch (error) {
-		res.status(500).json({ data: error });
+		res.status(500).json({ status: 'error', message: error });
+	}
+};
+
+const updateUser = async (req: Request, res: Response) => {
+	const { id } = req.params;
+	const { username, email, password } = req.body;
+	try {
+		const user = await prisma.user.update({
+			where: {
+				id: parseInt(id),
+			},
+			data: { username, email, password },
+		});
+		res.status(200).json({ status: 'success', data: user });
+	} catch (error) {
+		res.status(500).json({ status: 'error', message: error });
 	}
 };
 
@@ -57,4 +73,5 @@ export default {
 	getUser,
 	createUser,
 	removeUser,
+	updateUser,
 };
