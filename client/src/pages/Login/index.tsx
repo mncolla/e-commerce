@@ -1,6 +1,6 @@
 const Login = () => {
     return (
-        <div>Login</div>
+        <div className="text-red">Login</div>
     )
 }
 export default Login
