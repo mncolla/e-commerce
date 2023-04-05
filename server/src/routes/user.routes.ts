@@ -68,4 +68,20 @@ userRouter.post('/', [authMiddleware], userController.createUser);
  */
 userRouter.delete('/:id', [authMiddleware], userController.removeUser);
 
+/**
+ * @swagger
+ * /users/id:
+ *   put:
+ *     summary: Actualizar un usuario
+ *     description: Actualizar un usuario en la aplicacion
+ *     tags:
+ *        - Users
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado
+ *       500:
+ *         description: Error al actualizar el usuario
+ */
+userRouter.put('/:id', [authMiddleware], userController.removeUser);
+
 export { userRouter };
