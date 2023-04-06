@@ -4,6 +4,7 @@ import { apiRouter } from './routes';
 import dotenv from 'dotenv';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import cors from 'cors';
 
 // Initialize the express engine
 const app: express.Application = express();
@@ -31,6 +32,9 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Swagger server
 app.use('/api-docs/', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// Cors
+app.use(cors());
 
 // Take a port 3000 for running server.
 const port: number = 3000;
