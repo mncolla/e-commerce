@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, User } from '@prisma/client';
 import { decodeToken, generateToken } from '../services/jwt.service';
 
 const prisma = new PrismaClient();
@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 const logIn = async (req: Request, res: Response) => {
 	try {
 		const { email, password } = req.body;
-		const user: any = await prisma.user.findUnique({
+		const user: User | any = await prisma.user.findUnique({
 			where: {
 				email,
 			},
@@ -28,7 +28,7 @@ const logIn = async (req: Request, res: Response) => {
 
 		res.status(200).json({
 			status: 'success',
-			data: { token },
+			data: { user: { username: user.username, email: user.email }, token },
 		});
 	} catch (error) {
 		res.status(500).json({ status: 'error', message: error });
@@ -54,7 +54,7 @@ const signUp = async (req: Request, res: Response) => {
 		}
 
 		const hashed = await bcrypt.hash(password, 10);
-		const user: any = await prisma.user.create({
+		const user: User | any = await prisma.user.create({
 			data: { username, email, password: hashed },
 		});
 
@@ -62,7 +62,7 @@ const signUp = async (req: Request, res: Response) => {
 
 		res.status(200).json({
 			status: 'success',
-			data: { user, token },
+			data: { user: { username: user.username, email: user.email }, token },
 		});
 	} catch (error) {
 		res.status(500).json({ status: 'error', message: error });
@@ -75,7 +75,7 @@ const check = async (req: Request, res: Response) => {
 
 		const decoded: any = decodeToken(token!);
 
-		const user = await prisma.user.findUnique({
+		const user: User | any = await prisma.user.findUnique({
 			where: {
 				id: decoded.id,
 			},
