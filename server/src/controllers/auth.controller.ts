@@ -24,11 +24,20 @@ const logIn = async (req: Request, res: Response) => {
 			return;
 		}
 
+		const { id, username } = user;
+
 		const token = generateToken(user.id);
 
 		res.status(200).json({
 			status: 'success',
-			data: { token },
+			data: {
+				token,
+				user: {
+					id,
+					email,
+					username,
+				},
+			},
 		});
 	} catch (error) {
 		res.status(500).json({ status: 'error', message: error });
@@ -54,15 +63,13 @@ const signUp = async (req: Request, res: Response) => {
 		}
 
 		const hashed = await bcrypt.hash(password, 10);
-		const user: User | any = await prisma.user.create({
+		await prisma.user.create({
 			data: { username, email, password: hashed },
 		});
 
-		const token = generateToken(user.id);
-
 		res.status(200).json({
 			status: 'success',
-			data: { token },
+			message: 'User has been created',
 		});
 	} catch (error) {
 		res.status(500).json({ status: 'error', message: error });
