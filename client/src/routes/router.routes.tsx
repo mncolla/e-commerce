@@ -16,7 +16,7 @@ const Router = () => {
         <Route path={PATH_AUTH.login} element={<Login />} />
         <Route path={PATH_AUTH.signup} element={<Signup />} />
         {/* routes only for logged users */}
-        <Route element={<AuthGuard privateValidation={true} />}>
+        <Route element={<AuthGuard />}>
           <Route path={PATH_PAGE.home} element={<Home />} />
         </Route>
       </RoutesWithNotFound>

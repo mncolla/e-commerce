@@ -1,15 +1,24 @@
-import fetcher from "../../../utils/fetch";
+import { useDispatch } from "react-redux";
+import axiosInstance from "../../../utils/axiosInstance";
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../../../redux/states/user.state";
 
-interface loginProps {
-  email: string;
-  password: string;
-}
+export const login = async (email: string, password: string) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-export const login = async (credentials: loginProps) => {
+  const res = await axiosInstance.post("/auth/login", {
+    email,
+    password,
+  });
+
   const {
-    data: { token },
-  } = await fetcher.post(
-    "http://localhost:3000/api/v1/auth/login",
-    credentials
-  );
+    data: { token, user },
+  } = res.data;
+
+  dispatch(setUser(user));
+  localStorage.setItem("token", token);
+  navigate("/", { replace: true });
+
+  return { token, user };
 };

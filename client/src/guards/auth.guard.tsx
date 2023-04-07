@@ -5,6 +5,7 @@ import { AppStore } from '../redux/store';
 import { PropsWithChildren } from 'react';
 
 export const AuthGuard = (props: PropsWithChildren) => {
+
   const userState = useSelector((store: AppStore) => store.user);
   return userState.username ? (
     <Outlet />
