@@ -1,6 +1,13 @@
+import { useDispatch } from "react-redux";
+
+import { login } from "../redux/states/auth.state";
+
 class FetchInstance {
+
+  const dispatch = useDispatch();
+
   static async get(url: string, headers = {}): Promise<any> {
-    const token = this.getTokenFromCookies();
+    const token = this.getTokenFromLocalStorage();
     if (token) {
       headers = { ...headers, Authorization: `Bearer ${token}` };
     }
@@ -13,7 +20,7 @@ class FetchInstance {
   }
 
   static async post(url: string, data = {}, headers = {}): Promise<any> {
-    const token = this.getTokenFromCookies();
+    const token = this.getTokenFromLocalStorage();
     if (token) {
       headers = { ...headers, Authorization: `Bearer ${token}` };
     }
@@ -30,7 +37,7 @@ class FetchInstance {
   }
 
   static async put(url: string, data = {}, headers = {}) {
-    const token = this.getTokenFromCookies();
+    const token = this.getTokenFromLocalStorage();
     if (token) {
       headers = { ...headers, Authorization: `Bearer ${token}` };
     }
@@ -47,7 +54,7 @@ class FetchInstance {
   }
 
   static async patch(url: string, data = {}, headers = {}): Promise<any> {
-    const token = this.getTokenFromCookies();
+    const token = this.getTokenFromLocalStorage();
     if (token) {
       headers = { ...headers, Authorization: `Bearer ${token}` };
     }
@@ -64,7 +71,7 @@ class FetchInstance {
   }
 
   static async delete(url: string, headers = {}): Promise<any> {
-    const token = this.getTokenFromCookies();
+    const token = this.getTokenFromLocalStorage();
     if (token) {
       headers = { ...headers, Authorization: `Bearer ${token}` };
     }
@@ -76,11 +83,9 @@ class FetchInstance {
     return await response.json();
   }
 
-  static getTokenFromCookies() {
-    const tokenCookie = document.cookie
-      .split(";")
-      .find((cookie) => cookie.includes("token="));
-    return tokenCookie ? tokenCookie.split("=")[1] : null;
+  static getTokenFromLocalStorage() {
+    const tokenCookie = window.localStorage.getItem("token");
+    return tokenCookie;
   }
 }
 
