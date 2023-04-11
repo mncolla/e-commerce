@@ -1,4 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
+import { decodeToken } from '../services/jwt.service';
+import { TokenExpiredError } from 'jsonwebtoken';
 
 const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 	const { authorization } = req.headers;
@@ -9,6 +11,19 @@ const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
 			message: 'Token are not provided',
 		});
 		return;
+	}
+
+	try {
+		decodeToken(authorization!);
+	} catch (error) {
+		if (error instanceof TokenExpiredError) {
+			res.status(401).json({
+				status: 'error',
+				message: 'Session has been expired',
+				code: 'token-expired',
+			});
+			return;
+		}
 	}
 
 	next();
