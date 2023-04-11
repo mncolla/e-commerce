@@ -7,14 +7,29 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      config.headers.Authorization = `${token}`;
+    const session = localStorage.getItem("user");
+    if (session) {
+      const { token } = JSON.parse(session);
+      config.headers.authorization = `${token}`;
     }
     return config;
   },
   (error) => {
     return Promise.reject(error);
+  }
+);
+
+axiosInstance.interceptors.response.use(
+  (success) => success,
+  ({
+    response: {
+      data: { code },
+    },
+  }) => {
+    if (code === "token-expired") {
+      localStorage.removeItem("user");
+      window.location.href = "/";
+    }
   }
 );
 
