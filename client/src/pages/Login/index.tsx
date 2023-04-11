@@ -1,6 +1,13 @@
+import { useDispatch } from "react-redux";
 import { login } from './services/login.service';
+import { useNavigate } from "react-router-dom";
+import { setUser } from "../../redux/states/user.state";
 
 const Login = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (e: any) => {
         e.preventDefault()
@@ -8,7 +15,9 @@ const Login = () => {
         const { target: { email, password } } = e;
 
         if (email.value && password.value) {
-            await login(email.value, password.value)
+            const { session } = await login(email.value, password.value)
+            dispatch(setUser(session));
+            navigate("/", { replace: true });
         }
     }
     return (
