@@ -9,6 +9,7 @@ import {
 export const EmptyUserState: User = {
   username: "",
   email: "",
+  token: "",
 };
 
 export const UserKey = "user";
