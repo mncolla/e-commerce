@@ -1,18 +1,13 @@
-import { useEffect, useState } from "react"
-import axiosInstance from "../../utils/axiosInstance"
-
+import Navbar from "./components/Navbar"
+import Banner from "./components/Banner"
 const Home = () => {
 
-    const [me, setMe] = useState('')
-
-    useEffect(() => {
-        axiosInstance.post('auth/me')
-            .then((userInfo: any) => setMe(JSON.stringify(userInfo)))
-    }, [])
-
-
     return (
-        <div>{me}</div>
+        <div className="w-full h-full bg-slate-300">
+            <Navbar />
+            <Banner />
+            BODY DEL SITIO
+        </div>
     )
 }
 export default Home
