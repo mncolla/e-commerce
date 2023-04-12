@@ -1,0 +1,18 @@
+# Usar una imagen de Node.js con la versión 14
+FROM node:16-alpine
+
+# Crear y moverse al directorio de trabajo
+WORKDIR /app
+
+# Copiar el archivo package.json e instalar dependencias
+COPY package*.json ./
+RUN npm install
+
+# Copiar el resto de los archivos del proyecto
+COPY . .
+
+# Exponer el puerto 3000 para la aplicación
+EXPOSE 4000
+
+# Iniciar la aplicación cuando se ejecute el contenedor
+CMD ["npm", "run", "dev"]
