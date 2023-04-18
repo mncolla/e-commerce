@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route } from "react-router-dom"
+import { BrowserRouter, Route } from "react-router-dom"
 import { RoutesWithNotFound } from '../utils'
 import { PATH_AUTH, PATH_PAGE } from '.';
 import { lazy } from "react";
@@ -8,6 +8,7 @@ const Signup = lazy(() => import('../pages/Signup'));
 const Login = lazy(() => import('../pages/Login'));
 const Home = lazy(() => import('../pages/Home'));
 const Dashboard = lazy(() => import('../pages/Dashboard'));
+const Product = lazy(() => import('../pages/Product'));
 
 const Router = () => {
   return (
@@ -19,6 +20,7 @@ const Router = () => {
         {/* routes only for logged users */}
         <Route element={<AuthGuard />}>
           <Route path={PATH_PAGE.dashboard} element={<Dashboard />} />
+          <Route path={PATH_PAGE.product} element={<Product />} />
         </Route>
       </RoutesWithNotFound>
     </BrowserRouter>

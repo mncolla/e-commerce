@@ -1,5 +1,6 @@
-import { Navbar, Banner, Filters, Card } from "./components"
-import { CardProps } from "./components/Card"
+import { Navbar, Banner, Product, Store } from "./components"
+import { CardProps } from "./components/Product"
+import { StoreProps } from "./components/Store"
 
 const Home = () => {
 
@@ -18,17 +19,52 @@ const Home = () => {
         rating: 3
     }]
 
+    const sellers: StoreProps[] = [
+        {
+            name: 'Samsung',
+            bannerImg: 'https://http2.mlstatic.com/storage/official-stores-images/randers/background_home201806080444.jpg',
+            profileImg: 'https://http2.mlstatic.com/D_Q_NP_636207-MLA25899966797_082017-AE.webp',
+            link: '#'
+        },
+        {
+            name: 'Xiaomi',
+            bannerImg: 'https://http2.mlstatic.com/storage/official-stores-images/randers/background_home201806080444.jpg',
+            profileImg: 'https://http2.mlstatic.com/D_Q_NP_636207-MLA25899966797_082017-AE.webp',
+            link: '#'
+        },
+        {
+            name: 'Apple',
+            bannerImg: 'https://http2.mlstatic.com/storage/official-stores-images/randers/background_home201806080444.jpg',
+            profileImg: 'https://http2.mlstatic.com/D_Q_NP_636207-MLA25899966797_082017-AE.webp',
+            link: '#'
+        }
+    ]
+
     return (
-        <div className="w-full h-full ">
+        <div className="">
             <Navbar />
             <Banner />
-            <Filters />
-            <div className="w-8/12 mx-auto">
-                <h2 className="text-3xl font-semibold mt-10">Headphones for you</h2>
+            <div className="container mx-auto">
+                <h2 className="text-3xl font-light mt-10">Ofertas de esta semana</h2>
                 <div className="flex flex-wrap">
-                    {data.map((elem: CardProps, i: number) => <Card src={elem.src} title={elem.title} shortDesc={elem.shortDesc} price={elem.price} key={i} rating={elem.rating} />)}
+                    {data.map((elem: CardProps, i: number) => <Product src={elem.src} title={elem.title} shortDesc={elem.shortDesc} price={elem.price} key={i} rating={elem.rating} />)}
                 </div>
             </div>
+
+            <div className="container mx-auto">
+                <h2 className="text-3xl font-light mt-10">También te puede interesar</h2>
+                <div className="flex flex-wrap">
+                    {data.map((elem: CardProps, i: number) => <Product src={elem.src} title={elem.title} shortDesc={elem.shortDesc} price={elem.price} key={i} rating={elem.rating} />)}
+                </div>
+            </div>
+
+            <div className="container mx-auto">
+                <h2 className="text-3xl font-light mt-10">Las mejores tiendas</h2>
+                <div className="flex flex-wrap">
+                    {sellers.map((elem: StoreProps, i: number) => <Store key={`${elem.link}+${i}`} {...elem} />)}
+                </div>
+            </div>
+
         </div>
     )
 }

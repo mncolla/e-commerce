@@ -6,5 +6,6 @@ export const PATH_AUTH = {
 export const PATH_PAGE = {
   home: "home",
   dashboard: "dashboard",
+  product: "product",
   notFound: "404",
 };

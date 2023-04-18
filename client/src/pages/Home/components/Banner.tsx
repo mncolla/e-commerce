@@ -1,16 +1,13 @@
 const Banner = () => {
     return (
-        <div className="w-full bg-slate-400  mt-10">
-            <div className="w-8/12 mx-auto flex justify-between">
-                <div className="h-full flex flex-col my-auto w-72 justify-center">
-                    <span className="text-4xl">Promoción por el día del padre</span>
-                    <button className="btn btn-primary mt-3">Comprar ahora</button>
-                </div>
-                <div className="">
-                    <img src="/music.png" alt="" />
+        <div className="w-full py-48 bg-yellow-300">
+            <div className="container mx-auto text-left ">
+                <div className="max-w-md">
+                    <h1 className="mb-5 text-5xl font-bold">Ofertas semanales</h1>
+                    <p className="mb-5">Teléfonos con descuentos hasta el 30% solo por hoy.</p>
+                    <button className="btn btn-primary">Ver mas</button>
                 </div>
             </div>
-
         </div>
     )
 }
