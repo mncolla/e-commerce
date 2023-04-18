@@ -1,6 +1,6 @@
 // Import the express in typescript file
 import express from 'express';
-import { apiRouter } from './routes';
+import { apiRouter } from './api.router';
 import dotenv from 'dotenv';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
