@@ -58,6 +58,13 @@ const Home = () => {
             </div>
 
             <div className="container mx-auto">
+                <h2 className="text-3xl font-light mt-10">Ultimos productos publicados</h2>
+                <div className="flex flex-wrap">
+                    {data.map((elem: CardProps, i: number) => <Product src={elem.src} title={elem.title} shortDesc={elem.shortDesc} price={elem.price} key={i} rating={elem.rating} />)}
+                </div>
+            </div>
+
+            <div className="container mx-auto">
                 <h2 className="text-3xl font-light mt-10">También te puede interesar</h2>
                 <div className="flex flex-wrap">
                     {data.map((elem: CardProps, i: number) => <Product src={elem.src} title={elem.title} shortDesc={elem.shortDesc} price={elem.price} key={i} rating={elem.rating} />)}
