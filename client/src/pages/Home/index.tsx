@@ -1,4 +1,4 @@
-import { Navbar, Banner, Product, Store } from "./components"
+import { Navbar, Banner, Product, Brands } from "./components"
 import { CardProps } from "./components/Product"
 import { StoreProps } from "./components/Store"
 
@@ -37,6 +37,12 @@ const Home = () => {
             bannerImg: 'https://http2.mlstatic.com/storage/official-stores-images/randers/background_home201806080444.jpg',
             profileImg: 'https://http2.mlstatic.com/D_Q_NP_636207-MLA25899966797_082017-AE.webp',
             link: '#'
+        },
+        {
+            name: 'Motorola',
+            bannerImg: 'https://http2.mlstatic.com/storage/official-stores-images/randers/background_home201806080444.jpg',
+            profileImg: 'https://http2.mlstatic.com/D_Q_NP_636207-MLA25899966797_082017-AE.webp',
+            link: '#'
         }
     ]
 
@@ -58,12 +64,7 @@ const Home = () => {
                 </div>
             </div>
 
-            <div className="container mx-auto">
-                <h2 className="text-3xl font-light mt-10">Las mejores tiendas</h2>
-                <div className="flex flex-wrap">
-                    {sellers.map((elem: StoreProps, i: number) => <Store key={`${elem.link}+${i}`} {...elem} />)}
-                </div>
-            </div>
+            <Brands sellers={sellers} />
 
         </div>
     )

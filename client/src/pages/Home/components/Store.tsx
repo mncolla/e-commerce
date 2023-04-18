@@ -13,7 +13,7 @@ const Store = (props: StoreProps) => {
         link } = props;
 
     return (
-        <div className="card w-64 bg-base-100 shadow-xl image-full">
+        <div className="card w-64 bg-base-100 shadow-xl image-full mx-2">
             <figure><img src={bannerImg} alt="Background" /></figure>
             <div className="card-body items-center">
                 <div className="w-20">
