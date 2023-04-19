@@ -1,7 +1,8 @@
 // Import the express in typescript file
 import express from 'express';
-import { apiRouter } from './api.router';
+import { apiRouter } from './routes/api.router';
 import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import cors from 'cors';
@@ -43,7 +44,7 @@ const port: number = 3000;
 dotenv.config();
 
 // To take json format from response.
-app.use(express.json());
+app.use(bodyParser.json());
 
 // Routes
 app.use('/api/v1', apiRouter);

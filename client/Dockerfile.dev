@@ -1,5 +1,5 @@
 # Usar una imagen de Node.js con la versión 14
-FROM node:16-alpine
+FROM node:18
 
 # Crear y moverse al directorio de trabajo
 WORKDIR /app
